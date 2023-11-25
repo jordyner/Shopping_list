@@ -1,13 +1,8 @@
 import React, { useState } from 'react';
 import Item from './Item';
 
-export default function ItemList() {
-    const [items, setItems] = useState([
-        { id: 1, name: 'Mléko', isSolved: false, isEditing: false },
-        { id: 2, name: 'Chléb', isSolved: false, isEditing: false },
-        { id: 3, name: 'Jogurt', isSolved: false, isEditing: false },
-        { id: 4, name: 'Sýr', isSolved: false, isEditing: false },
-    ]);
+export default function ItemList({ itemsInput }) {
+    const [items, setItems] = useState(itemsInput)
     const [showSolved, setShowSolved] = useState(false);
     const [filter, setFilter] = useState('all'); 
 

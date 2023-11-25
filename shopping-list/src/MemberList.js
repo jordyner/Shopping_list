@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './css/styles.css';
 
-export default function MembersList({ isVisible, setIsVisible, owner, currentUser, setIsAppVisible }) {
-    const [members, setMembers] = useState(['Jirka', 'Kryštof', 'Marek', 'Matěj']);
+export default function MembersList({ isVisible, setIsVisible, owner, currentUser, setIsAppVisible, memberInput }) {
+    const [members, setMembers] = useState(memberInput);
     const [newMemberName, setNewMemberName] = useState('');
 
     const addMember = () => {
@@ -60,7 +60,7 @@ export default function MembersList({ isVisible, setIsVisible, owner, currentUse
                     {currentUser === member ? (
                         <button className='leaveButton' onClick={handleLeave}>Odejít</button>
                     ) : (
-                        <button className='deleteButton' onClick={() => deleteMember(member)}>Smazat</button>
+                        <button className='deleteMember' onClick={() => deleteMember(member)}>Smazat</button>
                     )}
                 </div>
             ))}

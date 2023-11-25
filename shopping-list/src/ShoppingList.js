@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
-export default function ShoppingList({ owner, currentUser }) {
-    const [title, setTitle] = useState('Shopping List');
+export default function ShoppingList({ owner, currentUser, name }) {
+    const [title, setTitle] = useState(name);
     const [isEditing, setIsEditing] = useState(false);
 
     const handleRenameClick = () => {

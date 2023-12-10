@@ -1,31 +1,72 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { addUserToShoppingListByName, removeUserFromShoppingListByName } from './ApiService';
+import MessageOverlay from './MessageOverlay';
 import './css/styles.css';
 
-export default function MembersList({ isVisible, setIsVisible, owner, currentUser, setIsAppVisible, memberInput }) {
+export default function MembersList({ isVisible, setIsVisible, owner, currentUser, setIsAppVisible, memberInput, currentListId }) {
+    const navigate = useNavigate();
     const [members, setMembers] = useState(memberInput);
     const [newMemberName, setNewMemberName] = useState('');
+    const [overlayMessage, setOverlayMessage] = useState('');
+    const [isOverlayVisible, setIsOverlayVisible] = useState(false);
 
-    const addMember = () => {
-        if (currentUser === owner) {
-            if (newMemberName) {
-                setMembers([...members, newMemberName]);
-                setNewMemberName('');
-            } 
-        } else {
-            console.log("Pouze vlastník může přidávat členy.");
-        }  
+    const showMessage = (message) => {
+        setOverlayMessage(message);
+        setIsOverlayVisible(true);
+        setTimeout(() => setIsOverlayVisible(false), 3000); 
     };
 
-    const deleteMember = (member) => {
-        if (currentUser === owner) {
-            setMembers(members.filter(m => m !== member));
-        } else {
-            console.log("Pouze vlastník může odstraňovat členy.");
+    const closeMessage = () => {
+        setIsOverlayVisible(false);
+    };
+
+    const addMember = async () => {
+        if (currentUser !== owner) {
+            showMessage("Pouze vlastník může přidávat členy.");
+            return;
+        }
+    
+        if (!newMemberName) {
+            showMessage("Jméno člena nesmí být prázdné.");
+            return;
+        }
+    
+        try {
+            await addUserToShoppingListByName(currentListId, newMemberName, showMessage);
+            setMembers(prevMembers => [...prevMembers, newMemberName]);
+            setNewMemberName('');
+        } catch (error) {
+            showMessage('Chyba při přidávání člena:', error);
         }
     };
 
-    const handleLeave = () => {
-        setIsAppVisible(false); 
+    const deleteMember = async (member) => {
+        if (currentUser !== owner) {
+            showMessage("Pouze vlastník může odstraňovat členy.");
+            return;
+        }
+    
+        try {
+            await removeUserFromShoppingListByName(currentListId, member);
+            setMembers(prevMembers => prevMembers.filter(m => m !== member));
+        } catch (error) {
+            showMessage('Chyba při odstraňování člena:', error);
+        }
+    };
+
+    const handleLeave = async () => {
+        if (currentUser === owner) {
+            showMessage("Vlastník nemůže opustit seznam."); 
+            return;
+        }
+
+        try {
+            await removeUserFromShoppingListByName(currentListId, currentUser);
+            navigate('/');
+        } catch (error) {
+            showMessage('Chyba při odchodu ze seznamu:', error);
+        }
     };
 
     useEffect(() => {
@@ -64,6 +105,11 @@ export default function MembersList({ isVisible, setIsVisible, owner, currentUse
                     )}
                 </div>
             ))}
+            <MessageOverlay 
+                message={overlayMessage} 
+                visible={isOverlayVisible} 
+                onClose={closeMessage} 
+            />
         </div>
     );
 }

@@ -1,19 +1,33 @@
 import React, { useState } from 'react'
+import { updateShoppingList } from './ApiService';
+import MessageOverlay from './MessageOverlay';
 
-export default function ShoppingList({ owner, currentUser, name }) {
+export default function ShoppingList({ owner, currentUser, name, currentListId }) {
     const [title, setTitle] = useState(name);
     const [isEditing, setIsEditing] = useState(false);
+    const [overlayMessage, setOverlayMessage] = useState('');
+    const [isOverlayVisible, setIsOverlayVisible] = useState(false);
 
+    const showMessage = (message) => {
+        setOverlayMessage(message);
+        setIsOverlayVisible(true);
+    };
+
+    const closeMessage = () => {
+        setIsOverlayVisible(false);
+    };
+    
     const handleRenameClick = () => {
         if (currentUser === owner) {
             setIsEditing(true)
         } else {
-            console.log("Pouze owner může měnit název.");
+            showMessage("Pouze owner může měnit název.");
         }
     };
 
     const handleTitleChange = (e) => {
         setTitle(e.target.value);
+        updateShoppingList(currentListId, {"name": e.target.value})
     };
 
     const handleBlur = () => {
@@ -41,6 +55,11 @@ export default function ShoppingList({ owner, currentUser, name }) {
                 <h1 style={{ cursor: 'pointer', margin: '0' }}>{title}</h1>
             )}
             <button onClick={handleRenameClick} style={{ cursor: 'pointer', margin: '0' }} className='renameButton'>Přejmenovat</button>
+            <MessageOverlay 
+                message={overlayMessage} 
+                visible={isOverlayVisible} 
+                onClose={closeMessage} 
+            />
         </div>
     )
 }

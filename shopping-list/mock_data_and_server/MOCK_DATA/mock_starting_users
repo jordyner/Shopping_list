@@ -1,0 +1,73 @@
+{
+  "1": {
+    "username": "Jirka",
+    "firstname": "Jiri",
+    "surname": "Jordan",
+    "role": [
+      "admin",
+      "user"
+    ],
+    "address": [
+      "X",
+      "Y",
+      "Z"
+    ],
+    "userId": 1
+  },
+  "2": {
+    "username": "Kris",
+    "firstname": "Krystof",
+    "surname": "Novak",
+    "role": [
+      "member"
+    ],
+    "address": [
+      "X",
+      "Y",
+      "Z"
+    ],
+    "userId": 2
+  },
+  "3": {
+    "username": "Lucka",
+    "firstname": "Lucie",
+    "surname": "Svobodova",
+    "role": [
+      "member"
+    ],
+    "address": [
+      "X",
+      "Y",
+      "Z"
+    ],
+    "userId": 3
+  },
+  "4": {
+    "username": "Petr",
+    "firstname": "Petr",
+    "surname": "Kotalík",
+    "role": [
+      "member"
+    ],
+    "address": [
+      "X",
+      "Y",
+      "Z"
+    ],
+    "userId": 4
+  },
+  "5": {
+    "username": "Evicka",
+    "firstname": "Eva",
+    "surname": "Jordanova",
+    "role": [
+      "member"
+    ],
+    "address": [
+      "X",
+      "Y",
+      "Z"
+    ],
+    "userId": 5
+  }
+}

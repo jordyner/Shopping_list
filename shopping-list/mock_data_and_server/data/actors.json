@@ -1,0 +1,25 @@
+{
+    "actors": [
+        {
+            "id": 1,
+            "username": "Jirka",
+            "password": "jirkovo_heslo",
+            "role": "admin",
+            "token": "bzCRIH4Lo3C79SC"
+        },
+        {
+            "id": 2,
+            "username": "Krystof",
+            "password": "krystofovo_heslo",
+            "role": "user",
+            "token": "d9hfXeWedmiec7g"
+        },
+        {
+            "id": 3,
+            "username": "Eva",
+            "password": "evy_heslo",
+            "role": "member",
+            "token": "U4Wc3vRtEl0qIiI"
+        }
+    ]
+}

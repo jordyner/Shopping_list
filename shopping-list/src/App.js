@@ -7,11 +7,6 @@ import HomePage from './HomePage';
 import './css/styles.css';
 
 function App() {
-    /*
-        Make owner and currentUser the same string to try out different permissions when
-        viewing shopping list as owner
-    */
-
     const params = useParams();
     const listId = parseInt(params.listId, 10); 
     const location = useLocation();
@@ -22,6 +17,7 @@ function App() {
     console.log("Přijaté listId:", listId);
     const [isMembersVisible, setIsMembersVisible] = useState(false);
     const [isAppVisible, setIsAppVisible] = useState(true);
+    const [modalMessage, setModalMessage] = useState('');
 
     if (!isAppVisible) {
         return null; 
@@ -31,7 +27,7 @@ function App() {
             <div className="appContainer">
                 <div className="userHeader">Aktuální uživatel: {currentList.currentUser}</div>
                 <div className="userHeader">Vlastník: {currentList.owner}</div>
-                <ShoppingList owner={currentList.owner} currentUser={currentList.currentUser} name={currentList.name}/>
+                <ShoppingList owner={currentList.owner} currentUser={currentList.currentUser} name={currentList.name} currentListId={listId}/>
     
                 <div className="buttonContainerMembers">
                     <button onClick={() => setIsMembersVisible(!isMembersVisible)}>
@@ -46,9 +42,10 @@ function App() {
                         currentUser={currentList.currentUser}
                         setIsAppVisible={setIsAppVisible}
                         memberInput={currentList.members}
+                        currentListId={listId}
                     />
     
-                <ItemList itemsInput={currentList.items} />
+                <ItemList itemsInput={currentList.items} currentListId={listId} />
             </div>
     )
 

@@ -33,11 +33,16 @@ export default function MembersList({ isVisible, setIsVisible, owner, currentUse
         }
     
         try {
-            await addUserToShoppingListByName(currentListId, newMemberName, showMessage);
-            setMembers(prevMembers => [...prevMembers, newMemberName]);
-            setNewMemberName('');
-        } catch (error) {
-            showMessage('Chyba při přidávání člena:', error);
+            const result = await addUserToShoppingListByName(currentListId, newMemberName, showMessage);
+            console.log(result)
+            if (result.success) {
+                setMembers(prevMembers => [...prevMembers, newMemberName]);
+                setNewMemberName('');
+            } else {
+                showMessage("Uživatel s tímto jménem nebyl nalezen.");
+            }
+        } catch {
+            showMessage('Chyba při přidávání člena:');
         }
     };
 
@@ -48,10 +53,10 @@ export default function MembersList({ isVisible, setIsVisible, owner, currentUse
         }
     
         try {
-            await removeUserFromShoppingListByName(currentListId, member);
+            await removeUserFromShoppingListByName(currentListId, member, showMessage);
             setMembers(prevMembers => prevMembers.filter(m => m !== member));
-        } catch (error) {
-            showMessage('Chyba při odstraňování člena:', error);
+        } catch {
+            showMessage('Chyba při odstraňování člena:');
         }
     };
 
@@ -69,47 +74,49 @@ export default function MembersList({ isVisible, setIsVisible, owner, currentUse
         }
     };
 
-    useEffect(() => {
-        const handleKeyDown = (event) => {
-            if (event.keyCode === 27) { 
-                setIsVisible(false);
-            }
-        };
+    const handleClickOutside = (event) => {
+        if (event.target.className === 'overlay') {
+            setIsVisible(false);
+        }
+    };
 
-        window.addEventListener('keydown', handleKeyDown);
+    useEffect(() => {
+        window.addEventListener('click', handleClickOutside);
         
         return () => {
-            window.removeEventListener('keydown', handleKeyDown);
+            window.removeEventListener('click', handleClickOutside);
         };
-    }, [setIsVisible]); 
+    }, []);
 
     return (
-        <div className={isVisible ? 'memberListContainer' : 'hidden'}>
-            <h3 className="memberTitle">Členové seznamu</h3>
-            <div className="memberInputContainer">
-                <input 
-                    type="text" 
-                    value={newMemberName} 
-                    onChange={(e) => setNewMemberName(e.target.value)} 
-                    placeholder="Jméno nového člena"
-                />
-                <button onClick={addMember}>Přidat člena</button>
-            </div>
-            {members.map(member => (
-                <div key={member} className="memberItem">
-                    {member}
-                    {currentUser === member ? (
-                        <button className='leaveButton' onClick={handleLeave}>Odejít</button>
-                    ) : (
-                        <button className='deleteMember' onClick={() => deleteMember(member)}>Smazat</button>
-                    )}
+        <div className={isVisible ? 'overlay' : 'hidden'} onClick={handleClickOutside}>
+            <div className={isVisible ? 'memberListContainer' : 'hidden'}>
+                <h3 className="memberTitle">Členové seznamu</h3>
+                <div className="memberInputContainer">
+                    <input 
+                        type="text" 
+                        value={newMemberName} 
+                        onChange={(e) => setNewMemberName(e.target.value)} 
+                        placeholder="Jméno nového člena"
+                    />
+                    <button onClick={addMember}>Přidat člena</button>
                 </div>
-            ))}
-            <MessageOverlay 
-                message={overlayMessage} 
-                visible={isOverlayVisible} 
-                onClose={closeMessage} 
-            />
+                {members.map(member => (
+                    <div key={member} className="memberItem">
+                        {member}
+                        {currentUser === member ? (
+                            <button className='leaveButton' onClick={handleLeave}>Odejít</button>
+                        ) : (
+                            <button className='deleteMember' onClick={() => deleteMember(member)}>Smazat</button>
+                        )}
+                    </div>
+                ))}
+                <MessageOverlay 
+                    message={overlayMessage} 
+                    visible={isOverlayVisible} 
+                    onClose={closeMessage} 
+                />
+            </div>
         </div>
     );
 }

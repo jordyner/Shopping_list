@@ -65,7 +65,7 @@ export const addUserToShoppingListByName = async (shoppingListId, username, show
 
         if (user) {
             const userId = user.userId;
-            await addMemberToShoppingList(shoppingListId, userId);
+            return await addMemberToShoppingList(shoppingListId, userId);
         } else {
             showMessage('Uživatel s tímto jménem nebyl nalezen.');
         }
@@ -78,19 +78,19 @@ const addMemberToShoppingList = async (shoppingListId, userId) => {
     return callAPI(`${API_BASE_URL}/shoppingList/${shoppingListId}/user/addMember/${userId}`, 'PUT');
 };
 
-export const removeUserFromShoppingListByName = async (shoppingListId, username) => {
+export const removeUserFromShoppingListByName = async (shoppingListId, username, showMessage) => {
     try {
         const users = await fetchUsers();
         const user = users.find(u => u.username === username);
 
         if (user) {
             const userId = user.userId; 
-            await removeMemberFromShoppingList(shoppingListId, userId);
+            return await removeMemberFromShoppingList(shoppingListId, userId);
         } else {
-            console.log('Uživatel s tímto jménem nebyl nalezen.');
+            showMessage('Uživatel s tímto jménem nebyl nalezen.');
         }
     } catch (error) {
-        console.error('Chyba při odstraňování uživatele ze seznamu:', error);
+        showMessage('Chyba při odstraňování uživatele ze seznamu:', error);
     }
 };
 

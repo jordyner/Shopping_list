@@ -1,0 +1,84 @@
+{
+    "1": {
+      "id": 1,
+      "name": "Nakup na oslavu",
+      "created": "2023-12-10T08:15:33.625Z",
+      "state": "active",
+      "owner": 1,
+      "members": [
+        1,
+        4,
+        3
+      ],
+      "products": {
+        "1": {
+          "name": "Syr",
+          "state": "open",
+          "description": "x",
+          "addedBy": 1,
+          "productId": 1,
+          "shoppingListId": 1
+        },
+        "2": {
+          "name": "Pivo",
+          "state": "open",
+          "description": "x",
+          "addedBy": 1,
+          "productId": 2,
+          "shoppingListId": 1
+        },
+        "3": {
+          "name": "Vino",
+          "state": "open",
+          "description": "x",
+          "addedBy": 1,
+          "productId": 3,
+          "shoppingListId": 1
+        },
+        "4": {
+          "name": "Rohliky 10ks",
+          "state": "open",
+          "description": "x",
+          "addedBy": 1,
+          "productId": 4,
+          "shoppingListId": 1
+        }
+      }
+    },
+    "2": {
+      "id": 2,
+      "name": "Darky Vanoce",
+      "created": "2023-12-10T08:59:36.597Z",
+      "state": "active",
+      "owner": 5,
+      "members": [
+        1, 5
+      ],
+      "products": {
+        "1": {
+          "name": "Svicka",
+          "state": "solved",
+          "description": "x",
+          "addedBy": 1,
+          "productId": 1,
+          "shoppingListId": 2
+        },
+        "2": {
+          "name": "Lego",
+          "state": "open",
+          "description": "x",
+          "addedBy": 1,
+          "productId": 2,
+          "shoppingListId": 2
+        },
+        "3": {
+          "name": "Hrnecek",
+          "state": "open",
+          "description": "x",
+          "addedBy": 1,
+          "productId": 3,
+          "shoppingListId": 2
+        }
+      }
+    }
+  }

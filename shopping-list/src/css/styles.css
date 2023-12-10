@@ -15,13 +15,14 @@
 }
 
 .memberTitle {
-    text-align: center; 
-    margin-bottom: 10px; 
+    text-align: center;
+    margin-bottom: 10px;
 }
 
-.memberItem, .memberInputContainer {
+.memberItem,
+.memberInputContainer {
     margin-left: 10px;
-    margin-top: 10px; 
+    margin-top: 10px;
 }
 
 .deleteButtonMember {
@@ -44,7 +45,7 @@
 }
 
 .itemSolved {
-    background-color: #d4edda; 
+    background-color: #d4edda;
 }
 
 /* Styles for ItemList */
@@ -55,7 +56,8 @@
     padding: 10px;
 }
 
-.itemListHeader, .memberItem {
+.itemListHeader,
+.memberItem {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -67,7 +69,8 @@
     margin: 10px;
 }
 
-.filterButton, .itemButton {
+.filterButton,
+.itemButton {
     margin-right: 10px
 }
 
@@ -111,8 +114,8 @@
 
 .gridContainer {
     display: grid;
-    grid-template-columns: 1fr 1fr; 
-    grid-template-rows: 1fr 1fr; 
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
     gap: 10px;
     padding: 10px;
     margin: 20px 200px;
@@ -137,45 +140,47 @@
 .buttonContainer {
     display: flex;
     justify-content: flex-end;
-    margin: 100px 200px 10px 200px; 
+    margin: 100px 200px 10px 200px;
 }
 
 .listName {
-    font-size: 3.0em; 
-    margin-bottom: 0.5em; 
+    font-size: 3.0em;
+    margin-bottom: 0.5em;
 }
 
 .listOwner {
-    font-size: 1em; 
-    color: grey; 
-    margin-bottom: 1em; 
+    font-size: 1em;
+    color: grey;
+    margin-bottom: 1em;
 }
 
 .divider {
     border: 0;
-    height: 2px; 
+    height: 2px;
     background-image: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.5), transparent);
-    margin: 1em 0; 
+    margin: 1em 0;
 }
 
 .listDetails {
-    display: flex; 
-    justify-content: space-around; 
-    align-items: center; 
-    text-align: center; 
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
     height: 50%;
 }
 
-.listMembers, .listItems {
-    width: 50%; 
+.listMembers,
+.listItems {
+    width: 50%;
     display: flex;
-    flex-direction: column; 
-    justify-content: center; 
-    align-items: center; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     font-size: 1.5em;
 }
 
-.deleteButton, .archiveButton {
+.deleteButton,
+.archiveButton {
     position: absolute;
     top: 10px;
     border: 1px solid #ccc;
@@ -189,12 +194,13 @@
 }
 
 .deleteButton {
-    right: 10px; 
+    right: 10px;
 }
 
 .archiveButton {
-    right: 80px; 
+    right: 80px;
 }
+
 .overlay {
     position: fixed;
     top: 0;
@@ -205,24 +211,27 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000; 
+    z-index: 1000;
 }
 
-.dialog, .deleteDialog {
+.dialog,
+.deleteDialog {
     background: white;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    width: 300px; 
+    width: 300px;
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
-.dialog button, .deleteDialog button {
+.dialog button,
+.deleteDialog button {
     margin: 0 5px;
 }
+
 .buttonContainer {
     display: flex;
     justify-content: space-between;
@@ -245,18 +254,97 @@
 }
 
 .buttonContainer .filterButtons .activeFilter {
-    background-color: #e0e0e0; 
-    border-color: #666; 
-    color: #333; 
+    background-color: #e0e0e0;
+    border-color: #666;
+    color: #333;
 }
 
 .activeFilter {
-    background-color: #e0e0e0; 
-    border-color: #666; 
-    color: #333; 
+    background-color: #e0e0e0;
+    border-color: #666;
+    color: #333;
 }
 
 .archivedItem {
-    opacity: 0.3; 
+    opacity: 0.3;
 }
 
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border-left-color: #09f;
+
+    animation: spin 1s ease infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.spinnerOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.5);
+    z-index: 1000;
+}
+
+.operationStatus {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    font-weight: bold;
+    color: #000;
+    z-index: 1010;
+}
+
+.operationStatus.success {
+    color: #28a745;
+}
+
+.operationStatus.fail {
+    color: #dc3545;
+}
+
+.message-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.message-content {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}

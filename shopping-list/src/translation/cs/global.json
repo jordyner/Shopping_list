@@ -1,0 +1,72 @@
+{
+    "HomePage": {
+        "createShoppingList": "Nový nákupní seznam",
+        "communicationSuccess": "Komunikace se serverem byla úspěšná",
+        "communicationFail": "Komunikace se serverem selhala",
+        "user": "Uživatel",
+        "owner": "Vlastník",
+        "shoppingLists": "Nákupní seznamy",
+        "members": "Členové",
+        "items": "Položky",
+        "yes": "Ano",
+        "no": "Ne",
+        "confirm": "Potvrdit",
+        "storno": "Storno",
+        "shoppingListName": "Název nákupního seznamu",
+        "deleteError": "Pouze vlastník může smazat nákupní seznam.",
+        "archiveButton": "Archivovat",
+        "deleteButton": "Smazat",
+        "deleteMessage": "Opravdu chcete provést tuto akci?",
+        "activeFilter": "Aktivní",
+        "allFilter": "Všechny",
+        "fetchDataError": "Došlo k problému při načítání dat:",
+        "deleteShoppingListError": "Chyba při mazání nákupního seznamu"
+    },
+    "SettingsButtons": {
+        "darkMode": "Tmavý režim",
+        "lightMode": "Světlý režim",
+        "csLang": "Czech",
+        "enLang": "English"
+    },
+    "App": {
+        "currentUser": "Aktuální uživatel",
+        "owner": "Vlastník",
+        "hideMembers": "Skrýt členy",
+        "showMembers": "Zobrazit členy"
+    },
+    "ItemList": {
+        "newItem": "Nová položka",
+        "allFilter": "Všechny",
+        "openFilter": "Otevřené",
+        "closedFilter": "Uzavřené",
+        "addNewItem": "Přidat novou položku",
+        "updateItemError": "Chyba při aktualizaci názvu produktu",
+        "addItemError": "Chyba při přidávání nové položky"
+    },
+    "Item": {
+        "solve": "Vyřešit",
+        "delete": "Smazat"
+    },
+    "ShoppingList": {
+        "rename": "Přejmenovat",
+        "renameError": "Pouze vlastník může přejmenovat tento nákupní seznam."
+    },
+    "MemberList": {
+        "addMemberError": "Pouze vlastník může přidávat členy.",
+        "removeMemberError": "Pouze vlastník může odebírat členy.",
+        "memberNameEmpty": "Jméno člena nesmí být prázdné.",
+        "missingMember": "Tento člen neexistuje.",
+        "addMemberFail": "Chyba při přidávání tohoto člena.",
+        "ownerCantLeave": "Vlastník nemůže opustit nákupní seznam.",
+        "errorLeaving": "Chyba při opouštění tohoto nákupního seznamu.",
+        "removeMemberFail": "Chyba při odebírání tohoto člena.",
+        "shoppingListMembers": "Členové nákupního seznamu",
+        "addMemberButton": "Přidat člena",
+        "leaveButton": "Opustit",
+        "deleteButton": "Smazat",
+        "newMemberName": "Jméno člena"
+    },
+    "MessageOverlay": {
+        "close": "Zavřít"
+    }
+}

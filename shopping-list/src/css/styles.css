@@ -1,4 +1,87 @@
 /* styles.css */
+:root {
+    --background-color: white;
+    --text-border-color: black;
+    --item-background: #d4edda;
+    --item-border-color: #ddd;
+    --grid-item: #d2cfcf;
+    --grid-item-hover: #bebdbd;
+    --success-status: #28a745;
+    --fail-status: #dc3545;
+    --overlay-color: rgba(0, 0, 0, 0.5);
+    --dialog-background: var(--background-color);
+    --button-background: #f5f5f5;
+    --button-text-color: #333;
+    --button-border-color: #ccc;
+    --filter-active-background: #e0e0e0;
+    --filter-active-border-color: #666;
+    --spinner-border-color: rgba(0, 0, 0, 0.1);
+    --spinner-highlight-color: #09f;
+    --message-overlay-background: var(--overlay-color);
+    --delete-dialog-shadow: rgba(0, 0, 0, 0.3);
+    --spinner-overlay: rgba(255, 255, 255, 0.5);
+    --message-content-shadow: rgba(0, 0, 0, 0.2);
+}
+
+.dark-mode {
+    --background-color: #121212;
+    --text-border-color: white;
+    --item-background: #2f9547;
+    --item-border-color: #555;
+    --grid-item: #434343;
+    --grid-item-hover: #525252;
+    --success-status: #28a745;
+    --fail-status: #dc3545;
+    --overlay-color: rgba(255, 255, 255, 0.1);
+    --dialog-background: var(--background-color);
+    --button-background: #333333;
+    --button-text-color: #f5f5f5;
+    --button-border-color: #444;
+    --filter-active-background: #424242;
+    --filter-active-border-color: #888;
+    --spinner-border-color: rgba(255, 255, 255, 0.1);
+    --spinner-highlight-color: #09f;
+    --message-overlay-background: var(--overlay-color);
+    --delete-dialog-shadow: rgba(255, 255, 255, 0.1);
+    --spinner-overlay: rgba(0, 0, 0, 0.5);
+    --message-content-shadow: rgba(255, 255, 255, 0.2);
+}
+
+body {
+    background-color: white;
+    color: black;
+}
+
+body.dark-mode {
+    background-color: #121212;
+    color: white;
+}
+
+input {
+    background-color: white;
+    color: black;
+}
+
+.dark-mode input {
+    background-color: #121212;
+    color: white;
+}
+
+button {
+    background-color: #f5f5f5;
+    color: #333;
+    border: 1px solid #ccc;
+}
+
+.dark-mode button {
+    background-color: #333;
+    color: #f5f5f5;
+    border: 1px solid #444;
+}
+
+.buttonSpacingSettings {
+    margin-right: 10px;
+}
 
 /* Styles for MemberList */
 .memberListContainer {
@@ -8,8 +91,8 @@
     width: 20%;
     height: 60%;
     margin: 10px;
-    background-color: white;
-    border: 1px solid black;
+    background-color: var(--background-color);
+    border: 1px solid var(--text-border-color);
     z-index: 100;
     overflow-y: auto;
 }
@@ -40,17 +123,18 @@
     align-items: center;
     padding: 10px;
     margin: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--item-border-color);
     border-radius: 4px;
+    font-size: 1.0em;
 }
 
 .itemSolved {
-    background-color: #d4edda;
+    background-color: var(--item-background);
 }
 
 /* Styles for ItemList */
 .itemListContainer {
-    border: 1px solid #000;
+    border: 1px solid var(--text-border-color);
     border-radius: 8px;
     margin: 10px;
     padding: 10px;
@@ -74,21 +158,10 @@
     margin-right: 10px
 }
 
-/* Styles for App */
-.itemListContainer {
-    border: 1px solid #000;
-    border-radius: 8px;
-    margin: 10px;
-    padding: 10px;
-}
-
-.itemListButton {
-    margin: 10px;
-}
-
 /* Styles for App (main component) */
 .appContainer {
     font-family: 'Roboto', sans-serif;
+    background-color: var(--background);
 }
 
 .userHeader {
@@ -119,13 +192,13 @@
     gap: 10px;
     padding: 10px;
     margin: 20px 200px;
-    border: 5px solid #000;
+    border: 5px solid var(--text-border-color);
 }
 
 .gridItem {
     height: 500px;
-    background-color: #d2cfcf;
-    border: 1px solid #ddd;
+    background-color: var(--grid-item);
+    border: 1px solid var(--item-border-color);
     padding: 20px;
     text-align: center;
     cursor: pointer;
@@ -134,13 +207,7 @@
 }
 
 .gridItem:hover {
-    background-color: #bebdbd
-}
-
-.buttonContainer {
-    display: flex;
-    justify-content: flex-end;
-    margin: 100px 200px 10px 200px;
+    background-color: var(--grid-item-hover)
 }
 
 .listName {
@@ -157,7 +224,7 @@
 .divider {
     border: 0;
     height: 2px;
-    background-image: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.5), transparent);
+    background-image: linear-gradient(to right, transparent, var(--overlay-color), transparent);
     margin: 1em 0;
 }
 
@@ -166,7 +233,13 @@
     justify-content: space-around;
     align-items: center;
     text-align: center;
-    height: 50%;
+    position: absolute;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin-bottom: 20%;
+    font-size: 1.0em;
 }
 
 .listMembers,
@@ -183,9 +256,9 @@
 .archiveButton {
     position: absolute;
     top: 10px;
-    border: 1px solid #ccc;
-    background-color: #f5f5f5;
-    color: #333;
+    border: 1px solid var(--button-border-color);
+    background-color: var(--button-background);
+    color: var(--button-text-color);
     cursor: pointer;
     padding: 5px 10px;
     border-radius: 4px;
@@ -207,7 +280,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: var(--overlay-color);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -216,11 +289,11 @@
 
 .dialog,
 .deleteDialog {
-    background: white;
+    background: var(--background-color);
     padding: 20px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--button-border-color);
     border-radius: 5px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 5px 15px var(--delete-dialog-shadow);
     width: 300px;
     display: flex;
     flex-direction: row;
@@ -236,15 +309,17 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 10px 200px;
+    margin: 0px 200px;
+    padding: 10px;
+    font-size: 1.0em;
 }
 
 .buttonContainer button {
     padding: 5px 10px;
     border-radius: 4px;
-    border: 1px solid #ccc;
-    background-color: #f5f5f5;
-    color: #333;
+    border: 1px solid var(--button-border-color);
+    background-color: var(--button-background);
+    color: var(--button-text-color);
     cursor: pointer;
     font-size: 0.8em;
 }
@@ -254,15 +329,15 @@
 }
 
 .buttonContainer .filterButtons .activeFilter {
-    background-color: #e0e0e0;
-    border-color: #666;
-    color: #333;
+    background-color: var(--filter-active-background);
+    border-color: var(--filter-active-border-color);
+    color: var(--button-text-color);
 }
 
 .activeFilter {
-    background-color: #e0e0e0;
-    border-color: #666;
-    color: #333;
+    background-color: var(--filter-active-background);
+    border-color: var(--filter-active-border-color);
+    color: var(--button-text-color);
 }
 
 .archivedItem {
@@ -277,11 +352,11 @@
 }
 
 .spinner {
-    border: 4px solid rgba(0, 0, 0, 0.1);
+    border: 4px solid var(--spinner-border-color);
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    border-left-color: #09f;
+    border-left-color: var(--spinner-highlight-color);
 
     animation: spin 1s ease infinite;
 }
@@ -305,7 +380,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: var(--spinner-overlay);
     z-index: 1000;
 }
 
@@ -316,19 +391,19 @@
     transform: translate(-50%, -50%);
     font-size: 24px;
     font-weight: bold;
-    color: #000;
+    color: var(--text-border-color);
     z-index: 1010;
 }
 
 .operationStatus.success {
-    color: #28a745;
+    color: var(--success-status);
 }
 
 .operationStatus.fail {
-    color: #dc3545;
+    color: var(--fail-status);
 }
 
-.message-overlay {
+.messageOverlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -337,14 +412,110 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0, 0, 0, 0.5);
+    background: var(--overlay-color);
     z-index: 1000;
 }
 
-.message-content {
-    background: white;
+.messageContent {
+    background: var(--background-color);
     padding: 20px;
     border-radius: 5px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    text-align: center;
+    width: 300px;
+    box-shadow: 0 2px 10px var(--message-content-shadow);
+}
+
+.newShoppingListDialog {
+    display: flex;
+    justify-content: space-around; 
+    align-items: center;
+}
+
+@media screen and (max-width: 889px) {
+    .gridContainer {
+        grid-template-columns: 1fr; 
+        margin: 20px;
+    }
+
+    .gridItem {
+        height: 500px;
+    }
+
+    .buttonContainer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 20px;
+        padding: 10px;
+    }
+
+    .messageOverlay {
+        align-items: flex-start; 
+        padding-top: 400px;
+    }
+
+    .archiveButton, .deleteButton {
+        margin: 5px 0; 
+        width: auto; 
+    }
+
+    .memberListContainer {
+        width: 60%;
+        position: static; 
+        height: 40%;
+        margin: 10px 0;
+    }
+
+    .itemButtonContainer {
+        display: flex;
+        flex-direction: row; 
+        justify-content: flex-start;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .homePageHeadline, .listName {
+        font-size: 2em; 
+    }
+
+    .userHeader, .messageContent, .deleteButton, .archiveButton, .buttonContainer, .memberTitle, .listDetails, .itemListHeader, .memberItem, .listOwner, .itemContainer {
+        font-size: 0.7em; 
+    }
+
+    .gridItem {
+        height: 300px;
+    }
+
+    .itemListContainer, .itemContainer {
+        margin: 5px;
+        padding: 5px;
+    }
+
+    .filterButton, .itemButton {
+        margin-right: 2px
+    }
+
+    button, input {
+        font-size: 0.7em; 
+    }
+
+    .dialog, .deleteDialog, .messageContent {
+        width: 200px;
+    }
+
+    .messageOverlay {
+        align-items: flex-start; 
+        padding-top: 250px;
+    }
+
+    .newShoppingListDialog {
+        flex-direction: column;
+    }
+
+    .buttonContainer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 20px;
+        padding: 10px; 
+    }
 }

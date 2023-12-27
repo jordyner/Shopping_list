@@ -3,7 +3,7 @@ import { addItemToShoppingList, updateProductNameInShoppingList, removeProductFr
 import Item from './Item';
 import MessageOverlay from './MessageOverlay';
 
-export default function ItemList({ itemsInput, currentListId }) {
+export default function ItemList({ itemsInput, currentListId, t }) {
     const [items, setItems] = useState(itemsInput)
     const [showSolved, setShowSolved] = useState(false);
     const [filter, setFilter] = useState('all');
@@ -82,12 +82,12 @@ export default function ItemList({ itemsInput, currentListId }) {
                 item.productId === productId ? { ...item, name: newName, isEditing: false } : item
             ));
         } catch (error) {
-            showMessage('Chyba při aktualizaci jména produktu:', error);
+            showMessage(t("ItemList.updateItemError"), error);
         }
     };
 
     const handleAddItem = async () => {
-        const itemName = 'Nová položka'; 
+        const itemName = t("ItemList.newItem"); 
     
         try {
             const response = await addItemToShoppingList(currentListId, itemName);
@@ -108,7 +108,7 @@ export default function ItemList({ itemsInput, currentListId }) {
             setFilter('open');
             fetchItems();
         } catch (error) {
-            showMessage('Chyba při přidávání položky:', error);
+            showMessage(t("ItemList.addItemError"), error);
         }
     };
 
@@ -124,11 +124,11 @@ export default function ItemList({ itemsInput, currentListId }) {
         <div className="itemListContainer">
             <div className="itemListHeader">
                 <div>
-                    <button className="filterButton" onClick={() => handleSetFilter('all')}>Všechny</button>
-                    <button className="filterButton" onClick={() => handleSetFilter('open')}>Otevřené</button>
-                    <button className="filterButton" onClick={() => handleSetFilter('solved')}>Uzavřené</button>
+                    <button className="filterButton" onClick={() => handleSetFilter('all')}>{t("ItemList.allFilter")}</button>
+                    <button className="filterButton" onClick={() => handleSetFilter('open')}>{t("ItemList.openFilter")}</button>
+                    <button className="filterButton" onClick={() => handleSetFilter('solved')}>{t("ItemList.closedFilter")}</button>
                 </div>
-                <button onClick={handleAddItem} className="itemListButton">Přidat novou položku</button>
+                <button onClick={handleAddItem} className="itemListButton">{t("ItemList.addNewItem")}</button>
             </div>
             {filteredItems.map(item => (
                 <Item
@@ -141,12 +141,14 @@ export default function ItemList({ itemsInput, currentListId }) {
                     onDelete={() => handleDelete(item.productId)}
                     onEdit={() => handleEdit(item.productId)}
                     onChangeName={(newName) => handleChangeName(item.productId, newName)}
+                    t={t}
                 />
             ))}
             <MessageOverlay 
                 message={overlayMessage} 
                 visible={isOverlayVisible} 
-                onClose={closeMessage} 
+                onClose={closeMessage}
+                t={t}
             />
         </div>
     );

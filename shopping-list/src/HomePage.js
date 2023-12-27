@@ -3,7 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { fetchShoppingLists, createShoppingList, updateShoppingList, idToName, deleteShoppingList } from './ApiService';
 import Spinner from './Spinner'
 import MessageOverlay from './MessageOverlay';
+import SettingsButtons from './SettingsButtons';
 import './css/styles.css';
+import { useTranslation } from 'react-i18next';
 
 function HomePage() {
     const navigate = useNavigate();
@@ -17,6 +19,8 @@ function HomePage() {
     const [shoppingLists, setShoppingLists] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [operationStatus, setOperationStatus] = useState('');
+    const [darkMode, setDarkMode] = useState(false);
+    const [t, i18n] = useTranslation("global")
 
     const showMessage = (message) => {
         setOverlayMessage(message);
@@ -65,14 +69,14 @@ function HomePage() {
     const fetchAndTransformShoppingLists = async () => {
         setIsLoading(true);
         setOperationStatus(''); 
-        //await new Promise(r => setTimeout(r, 2000)); - odkomentovat v pripade ze chceme aby se nakupni seznamy dele nacitaly, aby bylo lepe videt, ze to funguje
+        // await new Promise(r => setTimeout(r, 2000)); // - odkomentovat v pripade ze chceme aby se nakupni seznamy dele nacitaly, aby bylo lepe videt, ze to funguje
         try {
             const data = await fetchShoppingLists();
             const transformedData = await transformApiData(data.data); 
             setShoppingLists(transformedData);
             setOperationStatus('success'); 
         } catch (error) {
-            showMessage('There has been a problem with your fetch operation:', error);
+            showMessage(t("HomePage.fetchDataError"), error);
             setOperationStatus('fail'); 
         }
         setTimeout(() => setOperationStatus(''), 1000);
@@ -111,7 +115,7 @@ function HomePage() {
                 await deleteShoppingList(listToDelete);
                 await fetchAndTransformShoppingLists();  
             } catch (error) {
-                showMessage('Chyba při mazání seznamu:', error);
+                showMessage(t("HomePage.deleteShoppingListError"), error);
             }
         }
         setIsDeleteDialogOpen(false);
@@ -173,43 +177,45 @@ function HomePage() {
     };
 
     return (
-        <div>
+        <div class="${darkMode ? 'dark-mode' : ''}">
+            <SettingsButtons darkMode={darkMode} setDarkMode={setDarkMode} i18n={i18n} t={t}/>
             {isLoading && (
                 <div className="spinnerOverlay">
                     <Spinner />
                 </div>
             )}
             {!isLoading && operationStatus === 'success' && (
-                <div className="operationStatus success">Komunikace se serverem úspěšná</div>
+                <div className="operationStatus success">{t("HomePage.communicationSuccess")}</div>
             )}
             {!isLoading && operationStatus === 'fail' && (
-                <div className="operationStatus fail">Komunikace se serverem se nezdařila</div>
+                <div className="operationStatus fail">{t("HomePage.communicationFail")}</div>
             )}
             <MessageOverlay 
                 message={overlayMessage} 
                 visible={isOverlayVisible} 
                 onClose={closeMessage}
+                t={t}
             />
             <div>
-                <div className="userHeader">Uživatel: Jirka</div>
+                <div className="userHeader">{t("HomePage.user")}: Jirka</div>
             </div>
             <div className="homePageHeadlineContainer">
-                <h1 className='homePageHeadline'>Nákupní seznamy</h1>
+                <h1 className='homePageHeadline'>{t("HomePage.shoppingLists")}</h1>
             </div>
             <div className="buttonContainer">
                 <div className="filterButtons">
                     <button
                         className={currentFilter === 'active' ? 'activeFilter' : ''}
                         onClick={() => setCurrentFilter('active')}>
-                        Aktivní
+                        {t("HomePage.activeFilter")}
                     </button>
                     <button
                         className={currentFilter === 'all' ? 'activeFilter' : ''}
                         onClick={() => setCurrentFilter('all')}>
-                        Všechny
+                        {t("HomePage.allFilter")}
                     </button>
                 </div>
-                <button onClick={handleNewListButton}>Nový nákupní seznam</button>
+                <button onClick={handleNewListButton}>{t("HomePage.createShoppingList")}</button>
             </div>
 
             <div className="gridContainer">
@@ -217,21 +223,21 @@ function HomePage() {
                     <div key={list.id} className={`gridItem ${list.state === 'archived' ? 'archivedItem' : ''}`} onClick={() => handleButtonClick(list.id)}>
                         {list.state !== 'archived' && (
                             <button className="archiveButton" onClick={(e) => { e.stopPropagation(); handleArchiveList(list.id); }}>
-                                Archivovat
+                                {t("HomePage.archiveButton")}
                             </button>
                         )}
                         <button className="deleteButton" onClick={(e) => { e.stopPropagation(); openDeleteDialog(list.id); }}>
-                            Smazat
+                            {t("HomePage.deleteButton")}
                         </button>
                         <h2 className="listName">{list.name}</h2>
-                        <p className="listOwner">Vlastník: {list.owner}</p>
+                        <p className="listOwner">{t("HomePage.owner")}: {list.owner}</p>
                         <div className="listDetails">
                             <div className="listMembers">
-                                <span>Členové:</span>
+                                <span>{t("HomePage.members")}:</span>
                                 <span className="listCount">{list.members.length}</span>
                             </div>
                             <div className="listItems">
-                                <span>Položky</span>
+                                <span>{t("HomePage.items")}:</span>
                                 <span className="listCount">{list.items.length}</span>
                             </div>
                         </div>
@@ -247,10 +253,12 @@ function HomePage() {
                             type="text"
                             value={newListName}
                             onChange={(e) => setNewListName(e.target.value)}
-                            placeholder="Název seznamu"
+                            placeholder={t("HomePage.shoppingListName")}
                         />
-                        <button className='buttonContainer' onClick={handleConfirmNewList}>Potvrdit</button>
-                        <button className='buttonContainer' onClick={handleCancelNewList}>Storno</button>
+                        <div className="newShoppingListDialog">
+                            <button onClick={handleConfirmNewList}>{t("HomePage.confirm")}</button>
+                            <button onClick={handleCancelNewList}>{t("HomePage.storno")}</button>
+                        </div>
                     </div>
                 </div>
             )}
@@ -258,9 +266,9 @@ function HomePage() {
             {isDeleteDialogOpen && (
                 <div className="overlay">
                     <div className="deleteDialog">
-                        <p>Jste si jisti, že chcete nenávratně smazat tento nákupní seznam?</p>
-                        <button onClick={deleteList}>Ano</button>
-                        <button onClick={cancelDelete}>Ne</button>
+                        <p>{t("HomePage.deleteMessage")}</p>
+                        <button onClick={deleteList}>{t("HomePage.yes")}</button>
+                        <button onClick={cancelDelete}>{t("HomePage.no")}</button>
                     </div>
                 </div>
             )}
@@ -268,7 +276,7 @@ function HomePage() {
             {isOwnerWarningVisible && (
                 <div className="overlay">
                     <div className="deleteDialog">
-                        <p>Tento seznam může smazat pouze jeho vlastník.</p>
+                        <p>{t("HomePage.deleteError")}</p>
                         <button onClick={() => setIsOwnerWarningVisible(false)}>OK</button>
                     </div>
                 </div>

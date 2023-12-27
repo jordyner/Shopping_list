@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 function Item({ id, name, onSolve, onDelete, onEdit,
-    onChangeName, isSolved, isEditing }) {
+    onChangeName, isSolved, isEditing, t }) {
     const [editingName, setEditingName] = useState(name);
 
     return (
@@ -18,8 +19,8 @@ function Item({ id, name, onSolve, onDelete, onEdit,
                 <span onClick={() => onEdit(id)}>{name}</span>
             )}
             <div>
-                {!isSolved && <button className='itemButton' onClick={onSolve}>Vyřešit</button>}
-                <button className='itemButton' onClick={onDelete}>Smazat</button>
+                {!isSolved && <button className='itemButton' onClick={onSolve}>{t("Item.solve")}</button>}
+                <button className='itemButton' onClick={onDelete}>{t("Item.delete")}</button>
             </div>
         </div>
     );

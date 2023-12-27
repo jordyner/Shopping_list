@@ -1,0 +1,72 @@
+{
+    "HomePage": {
+        "createShoppingList": "Create shopping list",
+        "communicationSuccess": "Server communication successful",
+        "communicationFail": "Server communication failed",
+        "user": "User",
+        "owner": "Owner",
+        "shoppingLists": "Shopping Lists",
+        "members": "Members",
+        "items": "Items",
+        "yes": "Yes",
+        "no": "No",
+        "confirm": "Confirm",
+        "storno": "Storno",
+        "shoppingListName": "Shopping List Name",
+        "deleteError": "Only owner of the shopping list can perform this action.",
+        "archiveButton": "Archive",
+        "deleteButton": "Delete",
+        "deleteMessage": "Are you sure that you want to peform this action?",
+        "activeFilter": "Active",
+        "allFilter": "All",
+        "fetchDataError": "There has been a problem with your fetch operation:",
+        "deleteShoppingListError": "Error while deleting the shopping list"
+    },
+    "SettingsButtons": {
+        "darkMode": "Dark Mode",
+        "lightMode": "Light Mode",
+        "csLang": "Čeština",
+        "enLang": "Angličtina"
+    },
+    "App": {
+        "currentUser": "Current user",
+        "owner": "Owner",
+        "hideMembers": "Hide members",
+        "showMembers": "Show members"
+    },
+    "ItemList": {
+        "newItem": "New item",
+        "allFilter": "All",
+        "openFilter": "Open",
+        "closedFilter": "Closed",
+        "addNewItem": "Add new item",
+        "updateItemError": "Error when updating a product name",
+        "addItemError": "Error when adding new Item"
+    },
+    "Item": {
+        "solve": "Solve",
+        "delete": "Delete"
+    },
+    "ShoppingList": {
+        "rename": "Rename",
+        "renameError": "Only the owner can rename this shopping list."
+    },
+    "MemberList": {
+        "addMemberError": "Only owner can add members.",
+        "removeMemberError": "Only owner can remove members.",
+        "memberNameEmpty": "Member name cannot be empty.",
+        "missingMember": "This member does not exist.",
+        "addMemberFail": "An Error while adding this member.",
+        "ownerCantLeave": "The owner cannot leave the shopping list.",
+        "errorLeaving": "An Error when leaving this shopping list.",
+        "removeMemberFail": "An Error while removing this member.",
+        "shoppingListMembers": "Shopping list members",
+        "addMemberButton": "Add member",
+        "leaveButton": "Leave",
+        "deleteButton": "Delete",
+        "newMemberName": "Member name"
+    },
+    "MessageOverlay": {
+        "close": "Close"
+    }
+}

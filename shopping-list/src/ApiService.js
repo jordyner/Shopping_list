@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:8088';
+const API_BASE_URL = 'http://localhost:8080';
 const AUTH_TOKEN = 'Bearer bzCRIH4Lo3C79SC'; // Member: U4Wc3vRtEl0qIiI, User/Owner: bzCRIH4Lo3C79SC
 
 const callAPI = async (url, method, body = null) => {

@@ -4,7 +4,7 @@ import { addUserToShoppingListByName, removeUserFromShoppingListByName } from '.
 import MessageOverlay from './MessageOverlay';
 import './css/styles.css';
 
-export default function MembersList({ isVisible, setIsVisible, owner, currentUser, setIsAppVisible, memberInput, currentListId }) {
+export default function MembersList({ isVisible, setIsVisible, owner, currentUser, setIsAppVisible, memberInput, currentListId, t }) {
     const navigate = useNavigate();
     const [members, setMembers] = useState(memberInput);
     const [newMemberName, setNewMemberName] = useState('');
@@ -23,12 +23,12 @@ export default function MembersList({ isVisible, setIsVisible, owner, currentUse
 
     const addMember = async () => {
         if (currentUser !== owner) {
-            showMessage("Pouze vlastník může přidávat členy.");
+            showMessage(t("MemberList.addMemberError"));
             return;
         }
     
         if (!newMemberName) {
-            showMessage("Jméno člena nesmí být prázdné.");
+            showMessage(t("MemberList.memberNameEmpty"));
             return;
         }
     
@@ -39,16 +39,16 @@ export default function MembersList({ isVisible, setIsVisible, owner, currentUse
                 setMembers(prevMembers => [...prevMembers, newMemberName]);
                 setNewMemberName('');
             } else {
-                showMessage("Uživatel s tímto jménem nebyl nalezen.");
+                showMessage(t("MemberList.missingMember"));
             }
         } catch {
-            showMessage('Chyba při přidávání člena:');
+            showMessage(t("MemberList.addMemberFail"));
         }
     };
 
     const deleteMember = async (member) => {
         if (currentUser !== owner) {
-            showMessage("Pouze vlastník může odstraňovat členy.");
+            showMessage(t("MemberList.removeMemberError"));
             return;
         }
     
@@ -56,13 +56,13 @@ export default function MembersList({ isVisible, setIsVisible, owner, currentUse
             await removeUserFromShoppingListByName(currentListId, member, showMessage);
             setMembers(prevMembers => prevMembers.filter(m => m !== member));
         } catch {
-            showMessage('Chyba při odstraňování člena:');
+            showMessage(t("MemberList.removeMemberFail"));
         }
     };
 
     const handleLeave = async () => {
         if (currentUser === owner) {
-            showMessage("Vlastník nemůže opustit seznam."); 
+            showMessage(t("MemberList.errorLeaving"));
             return;
         }
 
@@ -70,7 +70,7 @@ export default function MembersList({ isVisible, setIsVisible, owner, currentUse
             await removeUserFromShoppingListByName(currentListId, currentUser);
             navigate('/');
         } catch (error) {
-            showMessage('Chyba při odchodu ze seznamu:', error);
+            showMessage(t("MemberList.errorLeaving"), error);
         }
     };
 
@@ -91,30 +91,31 @@ export default function MembersList({ isVisible, setIsVisible, owner, currentUse
     return (
         <div className={isVisible ? 'overlay' : 'hidden'} onClick={handleClickOutside}>
             <div className={isVisible ? 'memberListContainer' : 'hidden'}>
-                <h3 className="memberTitle">Členové seznamu</h3>
+                <h3 className="memberTitle">{t("MemberList.shoppingListMembers")}</h3>
                 <div className="memberInputContainer">
                     <input 
                         type="text" 
                         value={newMemberName} 
                         onChange={(e) => setNewMemberName(e.target.value)} 
-                        placeholder="Jméno nového člena"
+                        placeholder={t("MemberList.newMemberName")}
                     />
-                    <button onClick={addMember}>Přidat člena</button>
+                    <button onClick={addMember}>{t("MemberList.addMemberButton")}</button>
                 </div>
                 {members.map(member => (
                     <div key={member} className="memberItem">
                         {member}
                         {currentUser === member ? (
-                            <button className='leaveButton' onClick={handleLeave}>Odejít</button>
+                            <button className='leaveButton' onClick={handleLeave}>{t("MemberList.leaveButton")}</button>
                         ) : (
-                            <button className='deleteMember' onClick={() => deleteMember(member)}>Smazat</button>
+                            <button className='deleteMember' onClick={() => deleteMember(member)}>{t("MemberList.deleteButton")}</button>
                         )}
                     </div>
                 ))}
                 <MessageOverlay 
                     message={overlayMessage} 
                     visible={isOverlayVisible} 
-                    onClose={closeMessage} 
+                    onClose={closeMessage}
+                    t={t}
                 />
             </div>
         </div>

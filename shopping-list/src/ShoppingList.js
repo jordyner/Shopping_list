@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { updateShoppingList } from './ApiService';
 import MessageOverlay from './MessageOverlay';
 
-export default function ShoppingList({ owner, currentUser, name, currentListId }) {
+export default function ShoppingList({ owner, currentUser, name, currentListId, t }) {
     const [title, setTitle] = useState(name);
     const [isEditing, setIsEditing] = useState(false);
     const [overlayMessage, setOverlayMessage] = useState('');
@@ -21,7 +21,7 @@ export default function ShoppingList({ owner, currentUser, name, currentListId }
         if (currentUser === owner) {
             setIsEditing(true)
         } else {
-            showMessage("Pouze owner může měnit název.");
+            showMessage(t("ShoppingList.renameError"));
         }
     };
 
@@ -54,11 +54,12 @@ export default function ShoppingList({ owner, currentUser, name, currentListId }
             ) : (
                 <h1 style={{ cursor: 'pointer', margin: '0' }}>{title}</h1>
             )}
-            <button onClick={handleRenameClick} style={{ cursor: 'pointer', margin: '0' }} className='renameButton'>Přejmenovat</button>
+            <button onClick={handleRenameClick} style={{ cursor: 'pointer', margin: '0' }} className='renameButton'>{t("ShoppingList.rename")}</button>
             <MessageOverlay 
                 message={overlayMessage} 
                 visible={isOverlayVisible} 
-                onClose={closeMessage} 
+                onClose={closeMessage}
+                t={t}
             />
         </div>
     )

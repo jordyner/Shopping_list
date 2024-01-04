@@ -4,6 +4,7 @@ import { fetchShoppingLists, createShoppingList, updateShoppingList, idToName, d
 import Spinner from './Spinner'
 import MessageOverlay from './MessageOverlay';
 import SettingsButtons from './SettingsButtons';
+import BarChartVisual from './charts/BarChartVisual';
 import './css/styles.css';
 import { useTranslation } from 'react-i18next';
 
@@ -21,6 +22,7 @@ function HomePage() {
     const [operationStatus, setOperationStatus] = useState('');
     const [darkMode, setDarkMode] = useState(false);
     const [t, i18n] = useTranslation("global")
+    const [barChartData, setBarChartData] = useState([]);
 
     const showMessage = (message) => {
         setOverlayMessage(message);
@@ -32,6 +34,14 @@ function HomePage() {
         setIsOverlayVisible(false);
     };
 
+    const updateBarChartData = async (shoppingLists) =>  {
+        const newData = shoppingLists.map(list => ({
+            name: list.name,
+            itemCount: list.items.length
+        }));
+        console.log(newData)
+        setBarChartData(newData);
+    };
 
     async function transformApiData(apiData) {
         const ownerIds = Object.keys(apiData).map(key => apiData[key].owner);
@@ -86,6 +96,10 @@ function HomePage() {
     useEffect(() => {
         fetchAndTransformShoppingLists();
     }, []);
+
+    useEffect(() => {
+        updateBarChartData(shoppingLists);
+    }, [shoppingLists]);
 
     const openDeleteDialog = (id) => {
         const list = shoppingLists.find(list => list.id === id);
@@ -201,6 +215,9 @@ function HomePage() {
             </div>
             <div className="homePageHeadlineContainer">
                 <h1 className='homePageHeadline'>{t("HomePage.shoppingLists")}</h1>
+            </div>
+            <div className="barChartContainer">
+                <BarChartVisual data={barChartData} t={t}/>
             </div>
             <div className="buttonContainer">
                 <div className="filterButtons">

@@ -41,7 +41,9 @@
         "closedFilter": "Closed",
         "addNewItem": "Add new item",
         "updateItemError": "Error when updating a product name",
-        "addItemError": "Error when adding new Item"
+        "addItemError": "Error when adding new Item",
+        "showChart": "Show graph",
+        "showItems": "Show items"
     },
     "Item": {
         "solve": "Solve",
@@ -68,5 +70,9 @@
     },
     "MessageOverlay": {
         "close": "Close"
+    },
+    "BarChart": {
+        "name": "Name",
+        "itemCount": "Item Count"
     }
 }

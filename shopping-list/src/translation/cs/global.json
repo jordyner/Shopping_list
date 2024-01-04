@@ -41,7 +41,9 @@
         "closedFilter": "Uzavřené",
         "addNewItem": "Přidat novou položku",
         "updateItemError": "Chyba při aktualizaci názvu produktu",
-        "addItemError": "Chyba při přidávání nové položky"
+        "addItemError": "Chyba při přidávání nové položky",
+        "showChart": "Zobrazit graf",
+        "showItems": "Zobrazit položky"
     },
     "Item": {
         "solve": "Vyřešit",
@@ -68,5 +70,9 @@
     },
     "MessageOverlay": {
         "close": "Zavřít"
+    },
+    "BarChart": {
+        "name": "Název",
+        "itemCount": "Počet položek"
     }
 }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { addItemToShoppingList, updateProductNameInShoppingList, removeProductFromShoppingList, updateProductStatusInShoppingList, fetchItemsFromShoppingList } from './ApiService';
 import Item from './Item';
 import MessageOverlay from './MessageOverlay';
+import PieChartVisual from './charts/PieChartVisual';
 
 export default function ItemList({ itemsInput, currentListId, t }) {
     const [items, setItems] = useState(itemsInput)
@@ -9,6 +10,18 @@ export default function ItemList({ itemsInput, currentListId, t }) {
     const [filter, setFilter] = useState('all');
     const [overlayMessage, setOverlayMessage] = useState('');
     const [isOverlayVisible, setIsOverlayVisible] = useState(false);
+    const [solvedCount, setSolvedCount] = useState(0);
+    const [openCount, setOpenCount] = useState(0);
+    const [showChart, setShowChart] = useState(false);
+
+    const pieChartData = [
+        { name: t("ItemList.closedFilter"), value: solvedCount },
+        { name: t("ItemList.openFilter"), value: openCount },
+    ];
+
+    const toggleChart = () => {
+        setShowChart(!showChart);
+    };
 
     const showMessage = (message) => {
         setOverlayMessage(message);
@@ -24,8 +37,21 @@ export default function ItemList({ itemsInput, currentListId, t }) {
     const fetchItems = async () => {
         try {
             const fetchedData = await fetchItemsFromShoppingList(currentListId);
-
             const fetchedItems = fetchedData && fetchedData.data ? Object.values(fetchedData.data) : [];
+
+            let newSolvedCount = 0;
+            let newOpenCount = 0;
+
+            fetchedItems.forEach(item => {
+                if(item.state === 'solved') {
+                    newSolvedCount += 1;
+                } else {
+                    newOpenCount += 1;
+                }
+            });
+
+            setSolvedCount(newSolvedCount);
+            setOpenCount(newOpenCount);
 
             setItems(fetchedItems.map(item => ({
                 ...item,
@@ -127,23 +153,30 @@ export default function ItemList({ itemsInput, currentListId, t }) {
                     <button className="filterButton" onClick={() => handleSetFilter('all')}>{t("ItemList.allFilter")}</button>
                     <button className="filterButton" onClick={() => handleSetFilter('open')}>{t("ItemList.openFilter")}</button>
                     <button className="filterButton" onClick={() => handleSetFilter('solved')}>{t("ItemList.closedFilter")}</button>
+                    <button onClick={toggleChart} className="itemListButton">
+                        {showChart ? t("ItemList.showItems") : t("ItemList.showChart")}
+                    </button>
                 </div>
                 <button onClick={handleAddItem} className="itemListButton">{t("ItemList.addNewItem")}</button>
             </div>
-            {filteredItems.map(item => (
-                <Item
-                    key={item.productId}
-                    productId={item.productId}
-                    name={item.name}
-                    isSolved={item.isSolved}
-                    isEditing={item.isEditing}
-                    onSolve={() => handleSolve(item.productId)}
-                    onDelete={() => handleDelete(item.productId)}
-                    onEdit={() => handleEdit(item.productId)}
-                    onChangeName={(newName) => handleChangeName(item.productId, newName)}
-                    t={t}
-                />
-            ))}
+            {showChart ? (
+                <PieChartVisual data={pieChartData} />
+            ) : (
+                filteredItems.map(item => (
+                    <Item
+                        key={item.productId}
+                        productId={item.productId}
+                        name={item.name}
+                        isSolved={item.isSolved}
+                        isEditing={item.isEditing}
+                        onSolve={() => handleSolve(item.productId)}
+                        onDelete={() => handleDelete(item.productId)}
+                        onEdit={() => handleEdit(item.productId)}
+                        onChangeName={(newName) => handleChangeName(item.productId, newName)}
+                        t={t}
+                    />
+                ))
+            )}
             <MessageOverlay 
                 message={overlayMessage} 
                 visible={isOverlayVisible} 
